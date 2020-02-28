@@ -11,24 +11,30 @@ import java.util.Random;
  * @date: 2020年2月27日 下午4:29:24
  */
 public class StringUtil {
-	public static String getValue(String str, int start) {
+	public static String getValue(String str1, int start) {
 		// 八维教育学院 经过处理后,返回 八维****
-
-		String s1 = str.substring(2);
-		String s2 = "";
-		for (int i = 0; i < s1.length(); i++) {
-			// str = str.replace(String.valueOf(str.charAt(i)),"*");
-			s2 += "*";
+		// 截取后面需要代替的字符串，下标从start开始
+		String string = str1.substring(start);
+		// 定义一个空字符串用来接收*
+		String st = "";
+		// 循环遍历追加*,遍历长度等于截取字符串的长度
+		for (int i = 0; i < string.length(); i++) {
+			st += "*";
 		}
-		return str.substring(0, 2) + s2;
+		// 拼接成新的所要的字符串，带*的
+		String stt = str1.substring(0, start) + st;
+		// 返回新的字符串
+		return stt;
 	}
 
 	// 判断一个字符串是否是数字 考虑整数 负数 小数
 
 	public static boolean isNumber(String src) {
 
-		String reg = "^(-)?[0-9]+(\\.[0-9]+)?$";
-		return src.matches(reg);
+//		String reg = "^(-)?[0-9]+(\\.[0-9]+)?$";
+//		return src.matches(reg);
+		String ss = "^-\\d+(\\.[0-9]+)|\\d+(\\.[0-9]+)|-\\d+|\\d+$";
+		return src.matches(ss);
 	}
 
 	// 判断是否是中国的手机号
@@ -61,7 +67,7 @@ public class StringUtil {
 		String str = null;
 		int highPos, lowPos;
 		Random random = new Random();
-		highPos = (176 + Math.abs(random.nextInt(40)));// 区码，0xA0打头，从第16区开始，即0xB0=11*16=176,16~55一级汉字，56~87二级汉字
+		highPos = (176 + Math.abs(random.nextInt(39)));// 区码，0xA0打头，从第16区开始，即0xB0=11*16=176,16~55一级汉字，56~87二级汉字
 		random = new Random();
 		lowPos = 161 + Math.abs(random.nextInt(95));// 位码，0xA0打头，范围第1~94列
 		byte[] bArr = new byte[2];
