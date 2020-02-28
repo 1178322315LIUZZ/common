@@ -45,7 +45,7 @@ public class StringUtil {
 
 	}
 
-	// 判断是否邮箱
+	// 判断是否邮箱,所有格式的邮箱
 	public static boolean isEMail(String src) {
 		// 定义规则 num2222@126.com
 		String reg = "\\w+\\@\\w+\\.\\w+";
