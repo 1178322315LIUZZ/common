@@ -22,12 +22,10 @@ public class StreamUtil {
 	
 	public static List<String> read(File file) throws IOException{
 		//ÉùÃ÷¼¯ºÏ
-		List<String> list = new ArrayList<String>();
-		
+		List<String> list = new ArrayList<String>();		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line="";
 		while((line=reader.readLine())!=null) {
-			
 			list.add(line);
 		}
 		return list;
