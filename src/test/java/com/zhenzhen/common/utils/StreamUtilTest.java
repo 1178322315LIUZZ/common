@@ -14,15 +14,4 @@ public class StreamUtilTest {
 				System.out.println(string);
 			}
 	}
-
-	@Test
-	public void testReadString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testReadFile() {
-		fail("Not yet implemented");
-	}
-
 }
