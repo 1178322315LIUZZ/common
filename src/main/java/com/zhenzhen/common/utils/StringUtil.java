@@ -151,7 +151,7 @@ public class StringUtil {
 	}
 	/**
 	 * 校验传入的参数是否为url
-	 * @param param
+	 * @param 
 	 * @return
 	 */
 	public static boolean isHttpUrl(String param) {
