@@ -1,6 +1,7 @@
 package com.zhenzhen.common.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.util.Random;
 
 /**
@@ -147,5 +148,23 @@ public class StringUtil {
 		}
 		
 		return src1;
+	}
+	/**
+	 * 校验传入的参数是否为url
+	 * @param param
+	 * @return
+	 */
+	public static boolean isHttpUrl(String param) {
+		 URL url;  
+		 try {  
+	         url = new URL(param);
+	        url.openStream();  
+	         return true; //url合法
+	    } catch (Exception e1) {  
+	         System.out.println("连接打不开!");  
+	       
+	    }  
+		 return false;
+		
 	}
 }

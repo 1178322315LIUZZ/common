@@ -67,5 +67,11 @@ public class StringUtilTest {
 		String placeholderValue = StringUtil.getPlaceholderValue(src, regex);
 		System.out.println(placeholderValue);
 	}
-
+	@Test
+	public void isHttpUrl() {
+		boolean b = StringUtil.isHttpUrl("123456");
+		boolean b1 = StringUtil.isHttpUrl("http://127.0.0.1/");
+		System.out.println(b);
+		System.out.println(b1);
+	}
 }
