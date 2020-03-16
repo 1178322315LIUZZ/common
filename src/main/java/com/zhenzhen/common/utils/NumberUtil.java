@@ -9,10 +9,10 @@ public class NumberUtil {
 	/**
 	 * 
 	 * @Title: getPercent 
-	 * @Description: 百分比计算
+	 * @Description: 百分比计算方法
 	 * @param current
 	 * @param total
-	 * @return
+	 * @return int
 	 * @return: int
 	 */
 	public static int getPercent(int current, int total){
