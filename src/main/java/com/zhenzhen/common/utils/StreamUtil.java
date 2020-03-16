@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class StreamUtil {
 	public static List<String> read(InputStream InputStream) throws Exception{
+		//定义list集合
 		List<String> list=new ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(InputStream));
 		String line="";
