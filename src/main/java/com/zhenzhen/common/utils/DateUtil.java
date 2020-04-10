@@ -6,7 +6,7 @@ public class DateUtil {
 	/**
 	 * 
 	 * @Title: getAgeByBirthday 
-	 * @Description: ¸ù¾İ³öÉúÈÕÆÚËãÄêÁä
+	 * @Description: æ ¹æ®å‡ºç”Ÿæ—¥æœŸç®—å¹´é¾„
 	 * @param date
 	 * @return
 	 * @return: int
@@ -19,22 +19,22 @@ public class DateUtil {
 	/**
 	 * 
 	 * @Title: getEndMonth 
-	 * @Description: ·µ»ØÖ¸¶¨ÔÂ·İµÄÔÂÄ©ÈÕÆÚ±ÈÈç 2020-02-28 , ·µ»Ø 2020-02-29 23:59:59
+	 * @Description: è¿”å›æŒ‡å®šæœˆä»½çš„æœˆæœ«æ—¥æœŸæ¯”å¦‚ 2020-02-28 , è¿”å› 2020-02-29 23:59:59
 	 * @param date
 	 * @return
 	 * @return: Date
 	 */
 	public static Date getEndMonth(Date date) {
-		//»ñÈ¡ÈÕÀúÀà
+		//è·å–æ—¥å†ç±»
 		Calendar c = Calendar.getInstance();
-		//ÓÃ´«ÈëµÄÈÕÆÚ³õÊ¼»¯ÈÕÀúÀà
+		//ç”¨ä¼ å…¥çš„æ—¥æœŸåˆå§‹åŒ–æ—¥å†ç±»
 		c.setTime(date);
-		//ÕûÌåÈÃÔÂ·İ+1£¬ ÔÙ±ä³ÉÔÂ³õ -1 Ãë
+		//æ•´ä½“è®©æœˆä»½+1ï¼Œ å†å˜æˆæœˆåˆ -1 ç§’
 		c.add(Calendar.MONTH, 1);
-		Date initMonth = getInitMonth(c.getTime());//ÈÃÔÂ·İ+1
-		c.setTime(initMonth);//ÔÙ±ä³ÉÔÂ³õ
+		Date initMonth = getInitMonth(c.getTime());//è®©æœˆä»½+1
+		c.setTime(initMonth);//å†å˜æˆæœˆåˆ
 		
-		c.add(Calendar.SECOND, -1);//¼õÈ¥1Ãë
+		c.add(Calendar.SECOND, -1);//å‡å»1ç§’
 		return c.getTime();
 		
 	}
@@ -42,21 +42,21 @@ public class DateUtil {
 	/**
 	 * 
 	 * @Title: getInitMonth 
-	 * @Description: ·µ»ØÖ¸¶¨ÈÕÆÚµÄÔÂ³õ£¬±ÈÈç 2020-02-28 , ·µ»Ø 2020-02-01 00:00:00
+	 * @Description: è¿”å›æŒ‡å®šæ—¥æœŸçš„æœˆåˆï¼Œæ¯”å¦‚ 2020-02-28 , è¿”å› 2020-02-01 00:00:00
 	 * @param date
 	 * @return
 	 * @return: Date
 	 */
 	public  static Date  getInitMonth(Date date) {
-	//»ñÈ¡Ò»¸öÈÕÀúÀà
-		Calendar c = Calendar.getInstance();//»ñÈ¡µ±Ç°ÏµÍ³Ê±¼äµÄÈÕÀúÀà
-		//ÓÃ´«ÈëµÄÈÕÆÚÔÙ³õÊ¼»¯ÈÕÀúÀà
+	//è·å–ä¸€ä¸ªæ—¥å†ç±»
+		Calendar c = Calendar.getInstance();//è·å–å½“å‰ç³»ç»Ÿæ—¶é—´çš„æ—¥å†ç±»
+		//ç”¨ä¼ å…¥çš„æ—¥æœŸå†åˆå§‹åŒ–æ—¥å†ç±»
 		c.setTime(date);
-		//µ÷ÓÃÈÕÀúÀàµÄÏà¹Ø·½·¨
-		c.set(Calendar.DAY_OF_MONTH, 1);//ÈÃÈÕÆÚÎªµ±ÔÂµÄµÚÒ»Ìì
-		c.set(Calendar.HOUR_OF_DAY, 0);//Ğ¡Ê±
-		c.set(Calendar.MINUTE, 0);//·ÖÖÓ
-		c.set(Calendar.SECOND, 0);//Ãë
+		//è°ƒç”¨æ—¥å†ç±»çš„ç›¸å…³æ–¹æ³•
+		c.set(Calendar.DAY_OF_MONTH, 1);//è®©æ—¥æœŸä¸ºå½“æœˆçš„ç¬¬ä¸€å¤©
+		c.set(Calendar.HOUR_OF_DAY, 0);//å°æ—¶
+		c.set(Calendar.MINUTE, 0);//åˆ†é’Ÿ
+		c.set(Calendar.SECOND, 0);//ç§’
 		
 		return c.getTime();
 		
@@ -70,19 +70,19 @@ public class DateUtil {
 	 * 
 	 * @Title: randomDate 
 	 * @Description: TODO
-	 * @param min ×îĞ¡ÈÕÆÚ
-	 * @param max ×î´óÈÕÆÚ
-	 * @return ÔÚ min ºÍmaxÖ®¼äµÄËæ»úÈÕÆÚ
+	 * @param min æœ€å°æ—¥æœŸ
+	 * @param max æœ€å¤§æ—¥æœŸ
+	 * @return åœ¨ min å’Œmaxä¹‹é—´çš„éšæœºæ—¥æœŸ
 	 * @return: Date
 	 */
 	public  static Date randomDate(Date min,Date max) {
-		// »ñÈ¡×îĞ¡ÈÕÆÚµÄºÁÃëÊı.´Ó1970µ½min µÄºÁÃëÊı
+		// è·å–æœ€å°æ—¥æœŸçš„æ¯«ç§’æ•°.ä»1970åˆ°min çš„æ¯«ç§’æ•°
 		long t1 = min.getTime();
 		long t2 = max.getTime();
 		
 		if(t1 > t2 ) return null;
 		
-		double d = Math.random();  //·µ»Ø0-1 Ö®¼äµÄËæ»úÖµ
+		double d = Math.random();  //è¿”å›0-1 ä¹‹é—´çš„éšæœºå€¼
 	    long x = (long) (d *(t2 - t1 +1 )+t1);
 		return new Date(x);
 		

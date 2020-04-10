@@ -11,13 +11,13 @@ public class PersonTest {
 	public void test() {
 		for (int i = 0; i < 10000; i++) {
 			Person p = new Person();
-			// ÐÕÃûÊôÐÔÖµµ÷ÓÃStringUtil.generateChineseName()´´½¨£¨4·Ö£©
+			// å§“åå±žæ€§å€¼è°ƒç”¨StringUtil.generateChineseName()åˆ›å»ºï¼ˆ4åˆ†ï¼‰
 			p.setName(StringUtil.generateChineseName());
-			// ÄêÁäÊôÐÔÖµµ÷ÓÃRandomUtil.random()´´½¨£¬±ØÐëÔÚ1-120ËêÖ®¼ä£¨4·Ö£©
+			// å¹´é¾„å±žæ€§å€¼è°ƒç”¨RandomUtil.random()åˆ›å»ºï¼Œå¿…é¡»åœ¨1-120å²ä¹‹é—´ï¼ˆ4åˆ†ï¼‰
 			p.setAge(RandomUtil.random(1, 120));
-			// ½éÉÜÊôÐÔÖµµ÷ÓÃStringUtil.randomChineseString()´´½¨£¬×ÖÊýÎª140¸öËæ»úºº×Ö£¨4·Ö£©
+			// ä»‹ç»å±žæ€§å€¼è°ƒç”¨StringUtil.randomChineseString()åˆ›å»ºï¼Œå­—æ•°ä¸º140ä¸ªéšæœºæ±‰å­—ï¼ˆ4åˆ†ï¼‰
 			p.setAbout(StringUtil.randomChineseString(140));
-			// ×¢²áÈÕÆÚÊôÐÔÖµÄ£Äâ2010Äê1ÔÂ1ÈÕÖÁ½ñÈÎÒâËæ»úÊ±¼ä£¨4·Ö£©¡£
+			// æ³¨å†Œæ—¥æœŸå±žæ€§å€¼æ¨¡æ‹Ÿ2010å¹´1æœˆ1æ—¥è‡³ä»Šä»»æ„éšæœºæ—¶é—´ï¼ˆ4åˆ†ï¼‰ã€‚
 			Calendar c = Calendar.getInstance();
 			c.set(2010, 0, 1);
 			p.setCreated(DateUtil.randomDate(c.getTime(), new Date()));

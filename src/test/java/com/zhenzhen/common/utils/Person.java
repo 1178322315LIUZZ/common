@@ -3,8 +3,8 @@ import java.util.Date;
 public class Person {
 	private String name;
 	private Integer age;
-	private String about;//½éÉÜ
-	private Date created;//×¢²áÈÕÆÚ
+	private String about;
+	private Date created;
 	public String getName() {
 		return name;
 	}

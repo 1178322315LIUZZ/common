@@ -1,7 +1,7 @@
 package com.zhenzhen.common.utils;
 
 /**
- * Êı×Ö´¦ÀíÀà
+ * æ•°å­—å¤„ç†ç±»
  * @author Lzz18
  *
  */
@@ -9,7 +9,7 @@ public class NumberUtil {
 	/**
 	 * 
 	 * @Title: getPercent 
-	 * @Description: °Ù·Ö±È¼ÆËã·½·¨·Ö
+	 * @Description: ç™¾åˆ†æ¯”è®¡ç®—æ–¹æ³•åˆ†
 	 * @param current
 	 * @param total
 	 * @return int

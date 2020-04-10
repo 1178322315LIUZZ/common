@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class DateUtilTest {
 
-	// ÔÂÄ©
+	// æœˆæœ«
 	@Test
 	public void testEndMonth() {
 		Date date = DateUtil.getEndMonth(new Date());
@@ -17,7 +17,7 @@ public class DateUtilTest {
 		System.out.println(df.format(date));
 	}
 
-	// ÔÂ³õ
+	// æœˆåˆ
 	@Test
 	public void testInitMonth() {
 
@@ -29,9 +29,9 @@ public class DateUtilTest {
 
 	@Test
 	public void testRandomDate() {
-		// »ñÈ¡ÈÕÀúÀà
+		// è·å–æ—¥å†ç±»
 		Calendar c = Calendar.getInstance();
-		c.set(2010, 0, 1);// ÎªÈÕÀúÀàÉèÖÃ
+		c.set(2010, 0, 1);// ä¸ºæ—¥å†ç±»è®¾ç½®
 		Date date = DateUtil.randomDate(c.getTime(), new Date());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println(df.format(date));

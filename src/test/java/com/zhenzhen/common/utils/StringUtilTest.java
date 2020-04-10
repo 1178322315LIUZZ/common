@@ -7,7 +7,7 @@ import org.junit.Test;
 public class StringUtilTest {
 	@Test
 	public void testGetValue() {
-		String value = StringUtil.getValue("八维教育学院", 2);
+		String value = StringUtil.getValue("掳脣脦卢陆脤脫媒脩搂脭潞", 2);
 		System.out.println(value);
 
 	}
