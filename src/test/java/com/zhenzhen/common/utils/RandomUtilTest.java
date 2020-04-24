@@ -31,5 +31,9 @@ public class RandomUtilTest {
 		String string = RandomUtil.randomString(5);
 		System.out.println(string);
 	}
-
+	@Test
+	public void Random() {
+		String random = RandomUtil.random(9);
+		System.out.println(random);
+	}
 }

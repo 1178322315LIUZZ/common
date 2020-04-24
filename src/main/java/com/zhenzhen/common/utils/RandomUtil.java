@@ -61,4 +61,14 @@ public class RandomUtil {
 		// 返回字符串
 		return str;
 	}
+	//随机生成多位数
+	public static String random(int length) {
+		String random="";
+		Random ran=new Random();
+		for (int i = 0; i < length; i++) {
+			int  ii= ran.nextInt(9);
+			random+=ii;
+		}
+		return random;
+	}
 }
