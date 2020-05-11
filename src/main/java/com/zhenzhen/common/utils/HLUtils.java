@@ -10,9 +10,7 @@
  * @version: V1.0   
  */
 package com.zhenzhen.common.utils;
-/**
- * 高亮工具类
- */
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +42,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * @ClassName: ESUtils
  * @Description: TODO
- * @author: 
+ * @author: chj
  * @date: 2019年7月24日 上午10:14:13
  */
 public class HLUtils {
@@ -96,16 +94,15 @@ public class HLUtils {
 
 	// 查询操作
 	public static PageInfo<?> findByHighLight(ElasticsearchTemplate elasticsearchTemplate, Class<?> clazz, Integer page,
-			Integer rows, String fieldNames[],String sortField, String value) {
+			Integer rows, String fieldNames[],String idName, String value) {
+		//声明返回结果
 		AggregatedPage<?> pageInfo = null;
 		PageInfo<?> pi = new PageInfo<>();
-		// 创建Pageable对象														主键的实体类属性名
-		final Pageable pageable = PageRequest.of(page - 1, rows, Sort.by(Sort.Direction.ASC, sortField));
+		// 创建Pageable对象
+		Pageable pageable = PageRequest.of(page - 1, rows, Sort.by(Sort.Direction.ASC,idName));
 		//查询对象
 		SearchQuery query = null;
-		//查询条件高亮的构建对象
-		QueryBuilder queryBuilder = null;
-		
+
 		if (value != null && !"".equals(value)) {
 			// 高亮拼接的前缀与后缀
 			String preTags = "<font color=\"red\">";
@@ -120,13 +117,14 @@ public class HLUtils {
 			}
 
 			// 创建queryBuilder对象
-			queryBuilder = QueryBuilders.multiMatchQuery(value, fieldNames);
+			QueryBuilder queryBuilder = QueryBuilders.multiMatchQuery(value, fieldNames);
 			query = new NativeSearchQueryBuilder().withQuery(queryBuilder).withHighlightFields(highlightFields)
 					.withPageable(pageable).build();
 
 			pageInfo = elasticsearchTemplate.queryForPage(query, clazz, new SearchResultMapper() {
 
-				public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable1) {
+				@Override
+				public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable) {
 
 					List<T> content = new ArrayList<T>();
 					long total = 0l;
@@ -147,43 +145,9 @@ public class HLUtils {
 									T entity = clazz.newInstance();
 
 									// 获取具体的结果
-									SearchHit searchHit = searchHits[i]; 
+									SearchHit searchHit = searchHits[i];
 
-									// 获取对象的所有的字段
-									Field[] fields = clazz.getDeclaredFields();
-
-									// 遍历字段对象
-									for (int k = 0; k < fields.length; k++) {
-										// 获取字段对象
-										Field field = fields[k];
-										// 暴力反射
-										field.setAccessible(true);
-										// 字段名称
-										String fieldName = field.getName();
-										if (!fieldName.equals("serialVersionUID")&&!fieldName.equals("user")&&!fieldName.equals("channel")&&!fieldName.equals("category")&&!fieldName.equals("articleType")&&!fieldName.equals("imgList")) {
-											HighlightField highlightField = searchHit.getHighlightFields()
-													.get(fieldName);
-											if (highlightField != null) {
-												// 高亮 处理 拿到 被<font color='red'> </font>结束所包围的内容部分
-												String value = highlightField.getFragments()[0].toString();
-												// 注意一下他是否是 string类型
-												field.set(entity, value);
-											} else {
-												//获取某个字段对应的 value值
-												Object value = searchHit.getSourceAsMap().get(fieldName);
-												// 获取字段的类型
-												Class<?> type = field.getType();
-												if (type == Date.class) {
-													// bug
-													if(value!=null) {
-														field.set(entity, new Date(Long.valueOf(value + "")));
-													}
-												} else {
-													field.set(entity, value);
-												}
-											}
-										}
-									}
+									fieldList(clazz,entity,searchHit);
 
 									content.add(entity);
 								}
@@ -193,18 +157,71 @@ public class HLUtils {
 						e.printStackTrace();
 					}
 
-					return new AggregatedPageImpl<T>(content, pageable, total);
+					return new AggregatedPageImpl<>(content, pageable, total);
+				}
+
+				private <T> void fieldList(Class<T> clazz, T entity, SearchHit searchHit) throws IllegalAccessException {
+					if(clazz.getSuperclass()!=null && clazz.getSuperclass()!=Object.class) {
+						fieldList(clazz.getSuperclass(), entity, searchHit);
+					}
+					// 获取对象的所有的字段
+					Field[] fields = clazz.getDeclaredFields();
+
+
+					// 遍历字段对象
+					for (int k = 0; k < fields.length; k++) {
+						// 获取字段对象
+						Field field = fields[k];
+						// 暴力反射
+						field.setAccessible(true);
+						// 字段名称
+						String fieldName = field.getName();
+						if (!fieldName.equals("serialVersionUID")&&!fieldName.equals("user")&&!fieldName.equals("channel")&&!fieldName.equals("category")&&!fieldName.equals("articleType")&&!fieldName.equals("imgList")) {
+							HighlightField highlightField = searchHit.getHighlightFields()
+									.get(fieldName);
+							if (highlightField != null) {
+								// 高亮 处理 拿到 被<font color='red'> </font>结束所包围的内容部分
+								String value = highlightField.getFragments()[0].toString();
+								// 注意一下他是否是 string类型
+								field.set(entity, value);
+							} else {
+								//获取某个字段对应的 value值
+								Object value = searchHit.getSourceAsMap().get(fieldName);
+								//System.out.println(value);
+								// 获取字段的类型
+								Class<?> type = field.getType();
+								if (type == Date.class) {
+									// bug
+									if(value!=null) {
+										field.set(entity, new Date(Long.valueOf(value + "")));
+									}
+								}else if(type==Long.class){
+									if(value!=null){
+										//对Integer类型转换成Long
+										field.set(entity,Long.valueOf(value.toString()));
+									}
+								}else {
+									field.set(entity, value);
+								}
+							}
+						}
+					}
+				}
+
+				public <T> T mapSearchHit(SearchHit searchHit, Class<T> aClass) {
+					return null;
 				}
 			});
 
-		} else {
+		}
+		else {
 			// 没有查询条件的的时候，获取es中的全部数据 分页获取
 			query = new NativeSearchQueryBuilder().withPageable(pageable).build();
 			pageInfo = elasticsearchTemplate.queryForPage(query, clazz);
 		}
 		int totalCount = (int) pageInfo.getTotalElements();
 		int pages = totalCount%rows==0?totalCount/rows:totalCount/rows+1;
-		pi.setTotal(pageInfo.getTotalElements());
+		pi.setTotal(totalCount);
 		pi.setPageNum(page);
 		pi.setPageSize(rows);
 		pi.setPrePage(page-1);
